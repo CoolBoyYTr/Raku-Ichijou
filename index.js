@@ -1,14 +1,29 @@
-const Aoijs = require("aoi.js")
+const Aoijs = require("aoi.js");
+const Discord = require("discord.js");
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static('public'));
+app.get('/', function(request, response) {
+  response.sendFile(__dirname + '/config/cloud.html');
+});
+app.listen(3000, () => console.log(`Booting the bot online...`));
 
 const bot = new Aoijs.Bot({
-  token: "NzI0NDg1NzQ2MDEwMDk1NjY2.XvA37g.rfgMa3nRWySEQnLco1084FtmdCY", //Discord Bot Token
-  prefix: ["$getServerVar[prefix]"], 
-  intents: "all",
 
+  token: process.env.token,
+  prefix: ['$getservervar[prefix]', '<@$clientID>', '<@!$clientID>', '$'],
+  mobile: false,
+connectedBots: false,
+suppressAll: true,
+errorMessage: "",
+sharding: false,
+fetchInvites: true,
+applicationCache: true
 
-    //Change PREFIX to your Prefix
-//More Client options via !bot-options command or Documentation
-});
+})
 
 
 
